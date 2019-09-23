@@ -48,15 +48,16 @@ export default function CountryInfo(props: CountryInfoProps) {
     return <p>Loading failed. Please refresh the browser.</p>;
   }
 
-  if (!data) {
-    return null;
+  if (!data || !data.country) {
+    return <p>Unknown country. Please try another one.</p>;
   }
 
   return (
     <CountryInfoCard
       {...{
         ...data.country,
-        languages: data.country.languages.map(l => l.name),
+        languages:
+          data.country.languages && data.country.languages.map(l => l.name),
         phoneCode: data.country.phone
       }}
     />

@@ -4,9 +4,9 @@ import { Card } from './Card';
 interface CountryInfoCardProps {
   emoji: string;
   name: string;
-  currency: string;
-  languages: string[];
-  phoneCode: string;
+  currency?: string;
+  languages?: string[];
+  phoneCode?: string;
 }
 
 export function CountryInfoCard(props: CountryInfoCardProps) {
@@ -17,15 +17,21 @@ export function CountryInfoCard(props: CountryInfoCardProps) {
         {props.emoji} {props.name}
       </h2>
       <ul>
-        <li>
-          Currency: <strong>{props.currency}</strong>
-        </li>
-        <li>
-          Languages: <strong>{props.languages.join(', ')}</strong>
-        </li>
-        <li>
-          Phone code: <strong>{props.phoneCode}</strong>
-        </li>
+        {props.currency && (
+          <li>
+            Currency: <strong>{props.currency}</strong>
+          </li>
+        )}
+        {props.languages && (
+          <li>
+            Languages: <strong>{props.languages.join(', ')}</strong>
+          </li>
+        )}
+        {props.phoneCode && (
+          <li>
+            Phone code: <strong>{props.phoneCode}</strong>
+          </li>
+        )}
       </ul>
     </Card>
   );
