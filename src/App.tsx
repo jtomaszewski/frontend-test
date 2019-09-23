@@ -1,12 +1,16 @@
+import { ApolloProvider } from '@apollo/react-hooks';
 import React from 'react';
-import CountryInfo from './CountryInfo';
+import { client } from './apollo/client';
 import './App.css';
+import CountryInfo from './CountryInfo';
 
 function App() {
   return (
-    <div className="App">
-      <CountryInfo code="CA" />
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <CountryInfo code="CA" />
+      </div>
+    </ApolloProvider>
   );
 }
 
