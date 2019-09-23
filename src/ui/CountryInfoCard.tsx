@@ -12,7 +12,6 @@ interface CountryInfoCardProps {
 export function CountryInfoCard(props: CountryInfoCardProps) {
   return (
     <Card>
-      {/* TODO styling */}
       <h2>
         {props.emoji} {props.name}
       </h2>

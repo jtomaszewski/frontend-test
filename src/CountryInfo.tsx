@@ -4,7 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import { CountryInfoCard } from './ui/CountryInfoCard';
 
 export const GET_COUNTRY_QUERY = gql`
-  # Write your query or mutation here
   query Country($code: String!) {
     country(code: $code) {
       emoji
