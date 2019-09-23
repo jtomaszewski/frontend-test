@@ -1,0 +1,10 @@
+.CountrySelector {
+  display: block;
+  margin: 15px 0;
+}
+
+.CountrySelector__label {
+  display: inline-block;
+  font-weight: 500;
+  margin-right: 0.5em;
+}
