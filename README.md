@@ -1,81 +1,40 @@
 ## Running
 
-Install the packages via npm, and then run:
+```sh
+yarn
+yarn start
+# Go to http://localhost:3000
+```
 
-    npm start
+## Testing
 
-to run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```sh
+yarn test
+```
 
-The page will reload if you make edits. You will also see any lint errors in the console.
+## Info for task reviewers
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.  I decided to transform the app to TS right in the beginning, because I prefer to write type definitions while/before the actual code, instead of adding them after the code is already written and working. (It makes coding easier!)
 
-## Task
+    [P.S. I'm a big fan of TypeScript.](https://medium.com/@jtomaszewski/why-typescript-is-the-best-way-to-write-front-end-in-2019-feb855f9b164) I had been coding in it for over two years now.
 
-First, visit this page: [CountryDetail GraphQL API](https://countries.trevorblades.com/). This API gives details about a country, if a two-letter code is supplied (e.g. `CA`). Paste in the following query into the left hand side:
+2.  I went with `@apollo/react-hooks` as a library for GQL API because:
 
-    {
-      country(code: "CA") {
-        emoji
-        name
-        currency
-        languages {
-          name
-        }
-        phone
-      }
-    }
+    - I had been already using it (or [a similar package](https://github.com/trojanowski/react-apollo-hooks)) for the past year and loved it a lot
+    - I didn't want to reinvent the wheel by reimplementing a GQL client.
 
-Click the play button, and you'll get back a bunch of JSON data about that country, such as:
+3.  I extracted logic part from `CountryInfo` to `CountryInfoCard` so that `CountryInfo` only has the logic for the API request. I like to do it very often - to extract "impure" code from components to a hook or a higher-level component.
 
-		{
-		  "data": {
-		    "country": {
-		      "emoji": "🇨🇦",
-		      "name": "Canada",
-		      "currency": "CAD",
-		      "languages": [
-		        {
-		          "name": "English"
-		        },
-		        {
-		          "name": "French"
-		        }
-		      ],
-		      "phone": "1"
-		    }
-		  }
-		}
+    This makes testing UI/business logic in isolation easier; and also makes reusing or previewing the UI components to the designers easier. [I gave a presentation about it a few times on a few front-end meetups.](https://jtom.me/talks/make-your-components-pure-and-dumb-and-composable.pdf)
 
-**The task is this:** Update the React component within `CountryInfo.js`, so that it connects to the GraphQL API, makes the above query and displays the data returned in the manner below:
+4.  For mocking out the GQL request I used `@apollo/react-testing`. I think it solves the goal quite well. If I hadn't been using Apollo, but i.e. `fetch` directly, then I'd use `fetch-mock` instead.
 
-Example 1 - This code:
+5.  I didn't put any extra effort to styling, design or CSS. If you'd give me better designs, I'd code it ;) If you want to see how good I'm at css or design polish, I can send you some links via priv to the recent projects I was working on (or just see [my portfolio](https://jtom.me/portfolio/)). Usually I'm very attentive when it comes to design details! Pixel-perfect to the pain ;p
 
-    <CountryInfo code="CA" />
+6.  I chose to add `enzyme` as a component testing library because it lets you see if the component A renders component B (with some given set of props). Without it, unit tests become a bit more like e2e tests (I even argued about it [with some guy on Twitter](https://twitter.com/jtompl/status/1149205485192654848)). But it's just my taste. If you guys prefer `react-testing-library`, I'd be totally okay with it as well.
 
-Should render like:
+## Stuff that I'd consider doing in a larger project
 
-<img src="/screenshots/Canada.png" width="692" />
+- In my previous project, we've been extracting any GQL-related code to separate hooks in separate files. Then, we were able to test it in isolation using [react-hooks-testing-library](https://github.com/testing-library/react-hooks-testing-library). Depending on the project, maybe it would be a good solution there as well.
 
-While the code:
-
-    <CountryInfo code="GB" />
-
-Should render like:
-
-<img src="/screenshots/UK.png" width="683" />
-
-### Notes:
-
-* The GraphQL endpoint URL is: https://countries.trevorblades.com/
-* It is strongly encouraged to use React Hooks rather than a stateful class component.
-* You may use whichever library for accessing GraphQL (e.g. Apollo, Relay). CSS can be done through a framework. Or you can hand-code either, it's up to you!
-* It is up to you to decide what to show while the data is loading, if there is an API error, or if a country code cannot be found by the API (e.g. `XX`).
-
-### Bonus tasks
-
-If that was fun to do and you fancy doing more, try one or more of the below:
-
-* Update the component so that it is written in TypeScript.
-* Add a select/dropdown under the card, which allows the user to select different countries, and the card will update automatically
-* Add unit tests using a test framework of your choice, mocking out the GraphQL API appropriately.
+- Using css-in-js. I've been using `styled-components` for the last year and liked it quite a lot. In the projects which don't use css-in-js however, I usually use [css-modules](https://github.com/css-modules/css-modules) together with BEM naming, so that the CSS is unique per component AND readable to all the devs.
