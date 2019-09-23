@@ -1,12 +1,12 @@
 import React, { ChangeEvent } from 'react';
 
-interface CountrySelectorProps {
+interface SelectProps {
   value?: string;
-  options: string[];
+  options: { key?: string; label?: string; value: string }[];
   onChange?(value: string): void;
 }
 
-export function CountrySelector(props: CountrySelectorProps) {
+export function Select(props: SelectProps) {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (props.onChange) {
       props.onChange(event.target.value);
@@ -16,7 +16,9 @@ export function CountrySelector(props: CountrySelectorProps) {
   return (
     <select value={props.value} onChange={handleChange}>
       {props.options.map(option => (
-        <option value={option}>{option}</option>
+        <option key={option.key || option.value} value={option.value}>
+          {option.label || option.value}
+        </option>
       ))}
     </select>
   );
