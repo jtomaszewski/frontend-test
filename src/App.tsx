@@ -1,10 +1,13 @@
 import React from 'react';
-import CountryInfo from "./CountryInfo";
+import CountryInfo from './CountryInfo';
+import './App.css';
 
 function App() {
-  return <div className="container">
-    <CountryInfo code="CA" />
-  </div>;
+  return (
+    <div className="App">
+      <CountryInfo code="CA" />
+    </div>
+  );
 }
 
 export default App;
