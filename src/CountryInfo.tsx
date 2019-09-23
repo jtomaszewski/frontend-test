@@ -3,11 +3,7 @@ import gql from 'graphql-tag';
 import { useQuery } from '@apollo/react-hooks';
 import { CountryInfoCard } from './ui/CountryInfoCard';
 
-interface CountryInfoProps {
-  code: string;
-}
-
-const COUNTRY_GQ = gql`
+export const GET_COUNTRY_QUERY = gql`
   # Write your query or mutation here
   query Country($code: String!) {
     country(code: $code) {
@@ -22,18 +18,27 @@ const COUNTRY_GQ = gql`
   }
 `;
 
+export interface GetCountryQueryData {
+  country: {
+    emoji: string;
+    name: string;
+    currency: string;
+    languages: { name: string }[];
+    phone: string;
+  };
+}
+
+interface CountryInfoProps {
+  code: string;
+}
+
 export default function CountryInfo(props: CountryInfoProps) {
-  const { loading, error, data } = useQuery<{
-    country: {
-      emoji: string;
-      name: string;
-      currency: string;
-      languages: { name: string }[];
-      phone: string;
-    };
-  }>(COUNTRY_GQ, {
-    variables: { code: props.code }
-  });
+  const { loading, error, data } = useQuery<GetCountryQueryData>(
+    GET_COUNTRY_QUERY,
+    {
+      variables: { code: props.code }
+    }
+  );
 
   if (loading) {
     return <p>Loading...</p>;
