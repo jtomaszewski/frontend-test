@@ -4,7 +4,7 @@ export default function CountryInfo(props) {
 
   return <React.Fragment>
 
-    { /* TODO: This is where the detail goes */ }
+    {JSON.stringify(props)}
 
   </React.Fragment>;
 
